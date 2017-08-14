@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
 	//Tile Selection for Setup 01
 	public static int allocatedTiles = 50;
 	public static int chosenTiles = 0;
+	public static bool eraseMode = false;
 
 	public MapGenerator mg = null;
 
@@ -45,11 +46,21 @@ public class GameManager : MonoBehaviour {
 		UpdateMouseOver ();
 		//Debug.Log (mouseOver);
 
-		if (SceneManager.GetActiveScene ().buildIndex == 0) {
+		//If we are in the first scene and erase mode is off, we can add tiles
+		if (SceneManager.GetActiveScene ().buildIndex == 0 && !eraseMode) {
 			if (Input.GetMouseButton (0) && mouseOver.x >= 0 && chosenTiles < allocatedTiles) {
 				//Debug.Log ("chosen tile at " + mouseOver.x + ", " + mouseOver.y);
 				if (mapArray [(int)mouseOver.x, (int)mouseOver.y].ChooseTile () == true){
 					chosenTiles++;
+				}
+			}
+		}
+		//If we are in the first/second scene and erase mode is on, we can remove tiles
+		if ((SceneManager.GetActiveScene ().buildIndex == 0 || SceneManager.GetActiveScene ().buildIndex == 1 ) && eraseMode) {
+			if (Input.GetMouseButton (0) && mouseOver.x >= 0 && chosenTiles > 0) {
+				//Debug.Log ("chosen tile at " + mouseOver.x + ", " + mouseOver.y);
+				if (mapArray [(int)mouseOver.x, (int)mouseOver.y].UnchooseTile () == true){
+					chosenTiles--;
 				}
 			}
 		}
@@ -74,5 +85,9 @@ public class GameManager : MonoBehaviour {
 
 	public static int GetTiles(){
 		return chosenTiles;
+	}
+
+	public static void SetEraseMode(bool em){
+		eraseMode = em;
 	}
 }

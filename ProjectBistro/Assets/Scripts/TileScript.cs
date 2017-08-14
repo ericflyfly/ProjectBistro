@@ -32,17 +32,31 @@ public class TileScript : MonoBehaviour {
 	}
 
 	void OnMouseExit(){
-		mat.color = baseColor;
+		if (!chosen) {
+			mat.color = baseColor;
+		}
 	}
 
 	public bool ChooseTile(){
 		if (!chosen) {
 			mat.color = chosenColor;
-			baseColor = chosenColor;
 			chosen = true;
 			return true;
 		} else {
 			//Debug.Log ("Can't choose any more tiles!");
+			return false;
+		}
+	}
+
+	public bool UnchooseTile(){
+		if (chosen) {
+			mat.color = baseColor;
+			chosen = false;
+			if (currentModel != null) {
+				Destroy (currentModel);
+			}
+			return true;
+		} else {
 			return false;
 		}
 	}
