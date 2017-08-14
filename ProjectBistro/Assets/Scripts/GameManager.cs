@@ -7,8 +7,7 @@ public class GameManager : MonoBehaviour {
 	public MapGenerator mg;
 
 	public static TileScript[,] mapArray; 
-
-	private Vector2 mouseOver;
+	public static Vector2 mouseOver;
 
 	// Use this for initialization
 	void Start () {
@@ -20,12 +19,11 @@ public class GameManager : MonoBehaviour {
 		UpdateMouseOver ();
 		//Debug.Log (mouseOver);
 
-		if (Input.GetMouseButtonDown(0) && mouseOver.x >= 0) {
+		/*if (Input.GetMouseButtonDown(0) && mouseOver.x >= 0) {
 			Debug.Log ("chosen tile at " + mouseOver.x + ", " + mouseOver.y);
-			mapArray [(int)mouseOver.x, (int)mouseOver.y].Choose ();
-			mapArray [(int)mouseOver.x, (int)mouseOver.y].ChangeBaseColor ();
+			mapArray [(int)mouseOver.x, (int)mouseOver.y].SetItem();
 
-		}
+		}*/
 	}
 
 	//Method to check the location of the mouse on screen in terms of x and y

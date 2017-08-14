@@ -7,8 +7,12 @@ public class TileScript : MonoBehaviour {
 	private bool chosen = false;
 	private Material mat;
 	private Color baseColor;
+	private GameObject model;
+	private GameObject currentModel;
+	private float yOffset;
 
 	public Color highlightColor;
+	public Color chosenColor;
 
 	// Use this for initialization
 	void Start () {
@@ -31,13 +35,20 @@ public class TileScript : MonoBehaviour {
 		mat.color = baseColor;
 	}
 
-	public void ChangeBaseColor(){
-		baseColor = Color.red;
-		mat.color = baseColor;
-	}
-
-	public void Choose(){
+	//Set the item chosen to be displayed on this tile
+	//TODO: use different int values to represent different items in parantheses
+	public void SetItem(){
+		mat.color = chosenColor;
+		baseColor = chosenColor;
 		chosen = true;
+		currentModel = Instantiate (this.model, new Vector3(transform.position.x, yOffset, transform.position.z), model.transform.rotation);
 	}
 
+	public void SetModel(GameObject g){
+		this.model = g;
+	}
+
+	public void SetYOffset(float yOff){
+		this.yOffset = yOff;
+	}
 }
