@@ -86,7 +86,7 @@ LightmapSettings:
     m_PVRFilteringAtrousColorSigma: 1
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
-  m_LightingDataAsset: {fileID: 112000002, guid: a8d7c87c51b001141b8396ebcfbc9ffa,
+  m_LightingDataAsset: {fileID: 112000002, guid: 0c1e7281cba349d41860bf17d70d78ed,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -226,6 +226,26 @@ Prefab:
     - target: {fileID: 4999233503327108, guid: b33f78b839aa344459e94ba5830f915a, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114171936098743308, guid: b33f78b839aa344459e94ba5830f915a,
+        type: 2}
+      propertyPath: rotation.x
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 114171936098743308, guid: b33f78b839aa344459e94ba5830f915a,
+        type: 2}
+      propertyPath: rotation.y
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 114171936098743308, guid: b33f78b839aa344459e94ba5830f915a,
+        type: 2}
+      propertyPath: rotation.z
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 114171936098743308, guid: b33f78b839aa344459e94ba5830f915a,
+        type: 2}
+      propertyPath: sizeMultiplier
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b33f78b839aa344459e94ba5830f915a, type: 2}
@@ -664,7 +684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 4441066036916670, guid: 526bb995b26cdf648883fee31fcd5087, type: 2}
   mapSize: {x: 10, y: 10}
-  outlinePercent: 0.1
+  outlinePercent: 0.08
 --- !u!4 &1184097271
 Transform:
   m_ObjectHideFlags: 0
@@ -760,6 +780,32 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114302570371866432, guid: f47b77015ad683648a304a8efb29c733,
+        type: 2}
+      propertyPath: sizeMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114302570371866432, guid: f47b77015ad683648a304a8efb29c733,
+        type: 2}
+      propertyPath: rotation.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114302570371866432, guid: f47b77015ad683648a304a8efb29c733,
+        type: 2}
+      propertyPath: rotation.y
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114302570371866432, guid: f47b77015ad683648a304a8efb29c733,
+        type: 2}
+      propertyPath: rotation.z
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 114302570371866432, guid: f47b77015ad683648a304a8efb29c733,
+        type: 2}
+      propertyPath: model
+      value: 
+      objectReference: {fileID: 1443729621645728, guid: b704681d3a8dc4242b2dd5c297dc640e,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f47b77015ad683648a304a8efb29c733, type: 2}
   m_IsPrefabParent: 0

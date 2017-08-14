@@ -107,4 +107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a059c0321d9e341a2b6817c5441e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 1050839740581200}
+  model: {fileID: 1443729621645728, guid: b704681d3a8dc4242b2dd5c297dc640e, type: 2}
+  rotation: {x: 0, y: 0, z: 0}
+  sizeMultiplier: 0
