@@ -35,14 +35,21 @@ public class TileScript : MonoBehaviour {
 		mat.color = baseColor;
 	}
 
-	//Set the item chosen to be displayed on this tile
-	//TODO: use different int values to represent different items in parantheses
-	public void SetItem(){
+	public void ChooseTile(){
 		mat.color = chosenColor;
 		baseColor = chosenColor;
 		chosen = true;
-		currentModel = Instantiate (this.model, new Vector3(transform.position.x, yOffset, transform.position.z), model.transform.rotation);
-		currentModel.transform.parent = this.transform;
+	}
+
+	//Set the item chosen to be displayed on this tile
+	//TODO: use different int values to represent different items in parantheses
+	public void SetItem(){
+		if (chosen) {
+			currentModel = Instantiate (this.model, new Vector3 (transform.position.x, yOffset, transform.position.z), model.transform.rotation);
+			currentModel.transform.parent = this.transform;
+		} else {
+			Debug.Log ("Tile has not been chosen");
+		}
 	}
 
 	public void SetModel(GameObject g){

@@ -41,11 +41,12 @@ public class GameManager : MonoBehaviour {
 		UpdateMouseOver ();
 		//Debug.Log (mouseOver);
 
-		/*if (Input.GetMouseButtonDown(0) && mouseOver.x >= 0) {
-			Debug.Log ("chosen tile at " + mouseOver.x + ", " + mouseOver.y);
-			mapArray [(int)mouseOver.x, (int)mouseOver.y].SetItem();
-
-		}*/
+		if (SceneManager.GetActiveScene ().buildIndex == 0) {
+			if (Input.GetMouseButton (0) && mouseOver.x >= 0) {
+				//Debug.Log ("chosen tile at " + mouseOver.x + ", " + mouseOver.y);
+				mapArray [(int)mouseOver.x, (int)mouseOver.y].ChooseTile ();
+			}
+		}
 	}
 
 	//Method to check the location of the mouse on screen in terms of x and y

@@ -120,5 +120,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d431f2f1ccd70d49a75f5eb091d4318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightColor: {r: 1, g: 0.9724138, b: 0, a: 0}
-  chosenColor: {r: 0.8455882, g: 0.33240363, b: 0, a: 0}
+  highlightColor: {r: 1, g: 0.9724138, b: 0, a: 1}
+  chosenColor: {r: 1, g: 0.6413793, b: 0, a: 1}
