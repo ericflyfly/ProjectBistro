@@ -35,10 +35,16 @@ public class TileScript : MonoBehaviour {
 		mat.color = baseColor;
 	}
 
-	public void ChooseTile(){
-		mat.color = chosenColor;
-		baseColor = chosenColor;
-		chosen = true;
+	public bool ChooseTile(){
+		if (!chosen) {
+			mat.color = chosenColor;
+			baseColor = chosenColor;
+			chosen = true;
+			return true;
+		} else {
+			//Debug.Log ("Can't choose any more tiles!");
+			return false;
+		}
 	}
 
 	//Set the item chosen to be displayed on this tile

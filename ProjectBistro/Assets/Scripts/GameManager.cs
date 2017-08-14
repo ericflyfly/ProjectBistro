@@ -6,10 +6,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
-	public MapGenerator mg = null;
-
 	public static TileScript[,] mapArray; 
 	public static Vector2 mouseOver;
+
+	//Tile Selection for Setup 01
+	public static int allocatedTiles = 50;
+	public static int chosenTiles = 0;
+
+	public MapGenerator mg = null;
 
 	private bool mapGenerated = false;
 
@@ -35,16 +39,18 @@ public class GameManager : MonoBehaviour {
 			mapGenerated = true;
 		}
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		UpdateMouseOver ();
 		//Debug.Log (mouseOver);
 
 		if (SceneManager.GetActiveScene ().buildIndex == 0) {
-			if (Input.GetMouseButton (0) && mouseOver.x >= 0) {
+			if (Input.GetMouseButton (0) && mouseOver.x >= 0 && chosenTiles < allocatedTiles) {
 				//Debug.Log ("chosen tile at " + mouseOver.x + ", " + mouseOver.y);
-				mapArray [(int)mouseOver.x, (int)mouseOver.y].ChooseTile ();
+				if (mapArray [(int)mouseOver.x, (int)mouseOver.y].ChooseTile () == true){
+					chosenTiles++;
+				}
 			}
 		}
 	}
@@ -64,7 +70,9 @@ public class GameManager : MonoBehaviour {
 			mouseOver.x = -1;
 			mouseOver.y = -1;
 		}
-
 	}
-		
+
+	public static int GetTiles(){
+		return chosenTiles;
+	}
 }
