@@ -42,6 +42,7 @@ public class TileScript : MonoBehaviour {
 		baseColor = chosenColor;
 		chosen = true;
 		currentModel = Instantiate (this.model, new Vector3(transform.position.x, yOffset, transform.position.z), model.transform.rotation);
+		currentModel.transform.parent = this.transform;
 	}
 
 	public void SetModel(GameObject g){

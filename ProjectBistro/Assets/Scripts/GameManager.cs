@@ -1,17 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-	public MapGenerator mg;
+	public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
+	public MapGenerator mg = null;
 
 	public static TileScript[,] mapArray; 
 	public static Vector2 mouseOver;
 
+	private bool mapGenerated = false;
+
+	void Awake(){
+		//Check if instance already exists
+		if (instance == null)
+			//if not, set instance to this
+			instance = this;
+
+		//If instance already exists and it's not this:
+		else if (instance != this)
+			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+			Destroy(gameObject);  
+		
+		DontDestroyOnLoad (gameObject);
+	}
+
+
 	// Use this for initialization
 	void Start () {
-		mg.GenerateMap ();
+		if (!mapGenerated) {
+			mg.GenerateMap ();
+			mapGenerated = true;
+		}
 	}
 	
 	// Update is called once per frame
@@ -43,4 +65,5 @@ public class GameManager : MonoBehaviour {
 		}
 
 	}
+		
 }

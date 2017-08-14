@@ -3,11 +3,26 @@ using System.Collections;
 
 public class MapGenerator : MonoBehaviour {
 
+	public static MapGenerator instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
 	public Transform tilePrefab;
 	public Vector2 mapSize;
 
 	[Range(0,1)]
 	public float outlinePercent;
+
+	void Awake(){
+		//Check if instance already exists
+		if (instance == null)
+			//if not, set instance to this
+			instance = this;
+
+		//If instance already exists and it's not this:
+		else if (instance != this)
+			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+			Destroy(gameObject);  
+
+		DontDestroyOnLoad (gameObject);
+	}
 
 	public void GenerateMap() {
 		GameManager.mapArray = new TileScript[(int)mapSize.x,(int)mapSize.y];
