@@ -44,10 +44,31 @@ public class MapGenerator : MonoBehaviour {
 				Transform newTile = Instantiate (tilePrefab, tilePosition, Quaternion.identity) as Transform; 
 				newTile.localScale = new Vector3(0.1f,0.1f,0.1f) * (1-outlinePercent);
 				newTile.parent = mapHolder;
-
-				GameManager.mapArray [x, y] = newTile.GetComponent<TileScript>(); //Add each tile instantiated to the mapArray array. 
+				TileScript newTileScript = newTile.GetComponent<TileScript> ();
+				newTileScript.x = x;
+				newTileScript.y = y;
+				GameManager.mapArray [x, y] = newTileScript; //Add each tile instantiated to the mapArray array. 
 			}
 		}
+
+		Debug.Log (GameManager.mapArray [5, 5].x);
+
+		for (int x = 0; x < mapSize.x; x ++) {
+			for (int y = 0; y < mapSize.y; y ++) {
+				//Add the neighbours
+				if (x > 0) {
+					GameManager.mapArray [x, y].neighbours.Add (GameManager.mapArray [x - 1, y]);
+					//Debug.Log ("Adding neighbor at " + GameManager.mapArray [x - 1, y].x + GameManager.mapArray [x - 1, y].y + " to "  + x + y);
+				}
+				if(x < mapSize.x-1)
+					GameManager.mapArray[x,y].neighbours.Add( GameManager.mapArray[x+1, y] );
+				if(y > 0)
+					GameManager.mapArray[x,y].neighbours.Add( GameManager.mapArray[x, y-1] );
+				if(y < mapSize.y-1)
+					GameManager.mapArray[x,y].neighbours.Add( GameManager.mapArray[x, y+1] );
+			}
+		}
+		
 
 	}
 

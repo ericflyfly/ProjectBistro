@@ -4,20 +4,29 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour {
 
-	private bool chosen = false;
+	public bool chosen = false;
 	private Material mat;
 	private Color baseColor;
+
+	//For Item Setting
 	private GameObject model;
 	private GameObject currentModel;
+	public bool itemSet = false;
 	private float yOffset;
 
 	public Color highlightColor;
 	public Color chosenColor;
 
+	//For path finding
+	public List<TileScript> neighbours;
+	public int x;
+	public int y;
+
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		mat = GetComponent<Renderer>().material;
 		baseColor = mat.color;
+		neighbours = new List<TileScript>();
 	}
 	
 	// Update is called once per frame
@@ -52,6 +61,7 @@ public class TileScript : MonoBehaviour {
 		if (chosen) {
 			mat.color = baseColor;
 			chosen = false;
+			itemSet = false;
 			if (currentModel != null) {
 				Destroy (currentModel);
 			}
@@ -67,6 +77,7 @@ public class TileScript : MonoBehaviour {
 		if (chosen) {
 			currentModel = Instantiate (this.model, new Vector3 (transform.position.x, yOffset, transform.position.z), model.transform.rotation);
 			currentModel.transform.parent = this.transform;
+			itemSet = true;
 		} else {
 			Debug.Log ("Tile has not been chosen");
 		}
@@ -78,5 +89,17 @@ public class TileScript : MonoBehaviour {
 
 	public void SetYOffset(float yOff){
 		this.yOffset = yOff;
+	}
+
+	//Calculate distance to the tile in question
+	public float DistanceTo(TileScript t) {
+		if(t == null) {
+			Debug.LogError("TileScript is empty!");
+		}
+
+		return Vector2.Distance(
+			new Vector2(x, y),
+			new Vector2(t.x, t.y)
+		);
 	}
 }
