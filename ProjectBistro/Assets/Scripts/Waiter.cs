@@ -20,6 +20,8 @@ public class Waiter : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		//Moving the waiter for testing purposes 
 		if (Input.GetKeyDown ("x")) {
 			GeneratePathTo (7, 6);
 		}
@@ -41,6 +43,16 @@ public class Waiter : MonoBehaviour {
 				currNode++;
 			}
 		}
+
+		if (currentPath != null && currentPath.Count > 0) {
+			// Have we moved our visible piece close enough to the target tile that we can
+			// advance to the next step in our pathfinding?
+			if (Vector3.Distance (transform.position, new Vector3 (x, 0, y)) < 0.1f)
+				AdvancePathing ();
+		}
+
+		// Smoothly animate towards the correct map tile.
+		transform.position = Vector3.Lerp (transform.position, new Vector3 (x, 0, y), 5f * Time.deltaTime);
 	}
 
 	// Based on Dijkstra's Algorithm for graph navigation
@@ -134,5 +146,25 @@ public class Waiter : MonoBehaviour {
 		this.currentPath = currentPath;
 
 		Debug.Log ("Generated");
+	}
+
+	//Move one step forward
+	void AdvancePathing() {
+		if(currentPath==null)
+			return;
+
+		// Move us to the next tile in the sequence
+		this.x = currentPath[1].x;
+		this.y = currentPath[1].y;
+
+		// Remove the old "current" tile from the pathfinding list
+		currentPath.RemoveAt(0);
+
+		if(currentPath.Count == 1) {
+			// We only have one tile left in the path, and that tile MUST be our ultimate
+			// destination -- and we are standing on it!
+			// So let's just clear our pathfinding info.
+			currentPath = null;
+		}
 	}
 }

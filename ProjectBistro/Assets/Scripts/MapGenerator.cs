@@ -51,8 +51,6 @@ public class MapGenerator : MonoBehaviour {
 			}
 		}
 
-		Debug.Log (GameManager.mapArray [5, 5].x);
-
 		for (int x = 0; x < mapSize.x; x ++) {
 			for (int y = 0; y < mapSize.y; y ++) {
 				//Add the neighbours
