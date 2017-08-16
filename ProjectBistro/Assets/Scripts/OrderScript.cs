@@ -42,7 +42,7 @@ public class OrderScript : MonoBehaviour {
 				ChairModelScript currentScript = t.GetComponentInChildren<ChairModelScript> ();
 				if (currentScript.tableChosen && currentScript.TableHasSpace() && !currentScript.occupied) {
 					c.Add (currentScript);
-					Debug.Log ("Adding this chair at " + t.x + ", " + t.y);
+					//Debug.Log ("Adding this chair at " + t.x + ", " + t.y);
 				}
 			}
 		}

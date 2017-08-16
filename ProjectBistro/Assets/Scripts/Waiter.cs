@@ -63,7 +63,6 @@ public class Waiter : MonoBehaviour {
 		} else if ((currentPath == null || currentPath.Count == 0) && (this.x != (int)initialPos.x || this.y != (int)initialPos.y)) {
 			//Make waiter walk back as soon as delivered
 			GeneratePathTo ((int)initialPos.x, (int)initialPos.y);
-			//TODO: Communicate that food has been delivered 
 		} else if (this.x == (int)initialPos.x && this.y == (int)initialPos.y) {
 			TakeOrder ();
 		}

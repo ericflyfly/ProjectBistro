@@ -36,6 +36,7 @@ public class TileScript : MonoBehaviour {
 		
 	}
 
+	//TODO: switch this off once in main.
 	void OnMouseOver(){
 		if (!chosen) {
 			mat.color = highlightColor;

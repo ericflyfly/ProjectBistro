@@ -36,7 +36,7 @@ public class ItemScript : MonoBehaviour {
 		transform.localScale *= sizeMultiplier;
 		transform.rotation = Quaternion.Euler (rotation);
 
-		if (GameManager.mouseOver.x > 0) {
+		if (GameManager.mouseOver.x >= 0) {
 			TileScript currentTile = GameManager.mapArray [(int)GameManager.mouseOver.x, (int)GameManager.mouseOver.y];
 			currentTile.SetYOffset (0.4f);
 			currentTile.SetModel (this.model);
