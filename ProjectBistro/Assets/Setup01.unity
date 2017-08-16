@@ -138,6 +138,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mg: {fileID: 1439870021}
+  custNumber: 10
+  customerPrefab: {fileID: 1379159895343574, guid: 02261edab3bb3a541b81e2566906a733,
+    type: 2}
 --- !u!4 &378028508
 Transform:
   m_ObjectHideFlags: 0
@@ -1127,7 +1130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1986240319
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1192,7 +1195,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

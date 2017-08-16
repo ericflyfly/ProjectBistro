@@ -35,27 +35,42 @@ public class OrderScript : MonoBehaviour {
 		//TODO: give the order to the closest free waiter. 
 	}
 
-	public void OrderButton(){
-		AddOrder(1,7,4);
-	}
-
 	public void AssignRandomSeat(){
 		List<ChairModelScript> c = new List<ChairModelScript> ();
 		foreach (TileScript t in GameManager.mapArray) {
 			if (t.it == ItemScript.itemType.chair) {
 				ChairModelScript currentScript = t.GetComponentInChildren<ChairModelScript> ();
-				if (currentScript.tableChosen && currentScript.TableHasSpace()) {
+				if (currentScript.tableChosen && currentScript.TableHasSpace() && !currentScript.occupied) {
 					c.Add (currentScript);
 					Debug.Log ("Adding this chair at " + t.x + ", " + t.y);
 				}
 			}
 		}
 
-		//TODO: choose randomly and choose different people 
 		if (c.Count > 0) {
-			Vector2 freeSpacePosition = c [0].GetFreeSpace ();
-			GameManager.custList [0].transform.position = c [0].transform.position;
+			//Choose a random unoccupied seat
+			int randomSeat = Random.Range (0, c.Count);
+			//Debug.Log ("Random seat index: " + randomSeat);
+			while (c [randomSeat].occupied == true) {
+				randomSeat = Random.Range (0, c.Count);
+				//Debug.Log ("Next seat: " + randomSeat);
+			}
+				
+			int randomCust = Random.Range (0, GameManager.custNumber);
+			//Debug.Log ("Random customer index: " + randomCust);
+			while (GameManager.custList [randomCust].GetComponent<CustomerScript> ().isSeated == true) {
+				randomCust = Random.Range (0, GameManager.custNumber);
+				//Debug.Log ("Next customer: " + randomCust);
+			}
+
+
+			Vector2 freeSpacePosition = c [randomSeat].GetFreeSpace ();
+			GameManager.custList [randomCust].transform.position = c [randomSeat].transform.position;
+			c [randomSeat].occupied = true;
+			GameManager.custList [randomCust].GetComponent<CustomerScript> ().isSeated = true;
 			AddOrder (1, (int)freeSpacePosition.x, (int)freeSpacePosition.y);
+		} else {
+			Debug.Log ("No chairs to seat customers");
 		}
 	}
 }

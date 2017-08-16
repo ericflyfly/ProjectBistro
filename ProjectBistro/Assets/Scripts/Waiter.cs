@@ -208,7 +208,7 @@ public class Waiter : MonoBehaviour {
 				//Remove the order from the list iff the path is generated successfully
 				if (GeneratePathTo (tempOrderList [0].x, tempOrderList [0].y)) {
 					orderHandler.orderList.RemoveAt (0);
-				}
+				} 
 			}
 		}
 	}

@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour {
 	public MapGenerator mg = null;
 
 	//Customer Instantiation
-	public int custNumber;
+	public static int custNumber = 30;
 	public static List<GameObject> custList; 
 	public GameObject customerPrefab;
 
@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour {
 			cust.transform.parent = this.transform;
 
 			cust.GetComponent<CustomerScript> ().ID = i;
-			cust.GetComponent<CustomerScript> ().StartCustomer ();
 			custList.Add (cust);
 		}
 	}
@@ -109,4 +108,5 @@ public class GameManager : MonoBehaviour {
 	public static void SetEraseMode(bool em){
 		eraseMode = em;
 	}
+		
 }

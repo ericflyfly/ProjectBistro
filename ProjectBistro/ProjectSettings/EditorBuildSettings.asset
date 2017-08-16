@@ -11,3 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Setup02.unity
     guid: 9a6371a4a09a3b644ad0b2103d83067b
+  - enabled: 1
+    path: Assets/Setup03.unity
+    guid: 9849f546187ba024e87d00b098e14e46
+  - enabled: 1
+    path: Assets/Main.unity
+    guid: 42c1d21a13526794eb847ca1d9cece33

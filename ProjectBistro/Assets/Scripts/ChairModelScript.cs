@@ -6,6 +6,7 @@ public class ChairModelScript : MonoBehaviour {
 
 	public GameObject tableModel;
 	public bool tableChosen = false;
+	public bool occupied = false;
 
 	public void UpdateTableChosen(GameObject table){
 		if (tableChosen) {
@@ -13,7 +14,7 @@ public class ChairModelScript : MonoBehaviour {
 		}
 
 		tableModel = table;
-		Debug.Log ("Chair at " + transform.position + " has been assigned a table!");
+		//Debug.Log ("Chair at " + transform.position + " has been assigned a table!");
 
 		transform.LookAt (table.transform);
 		transform.rotation *= Quaternion.Euler (0, 90f, 0);
@@ -26,7 +27,7 @@ public class ChairModelScript : MonoBehaviour {
 		if (tableChosen) {
 			TileScript t = tableModel.GetComponentInParent<TileScript> ();
 			foreach (TileScript ts in t.neighbours) {
-				if (ts.itemSet) {
+				if (ts.itemSet || !ts.chosen) {
 					count++;
 				}
 			}
