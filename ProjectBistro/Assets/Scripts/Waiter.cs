@@ -6,16 +6,21 @@ public class Waiter : MonoBehaviour {
 
 	public List<TileScript> currentPath = null;
 
+	public Vector2 initialPos;
 	public int x;
 	public int y;
 
+	public OrderScript orderHandler;
+
 	// Use this for initialization
 	void Start () {
+		orderHandler = GameObject.FindGameObjectWithTag ("OrderHandler").GetComponent<OrderScript>();
+
 		currentPath = new List<TileScript> ();
 		x = (int)transform.position.x;
 		y = (int)transform.position.z;
 
-
+		initialPos = new Vector2 (x, y);
 	}
 
 	// Update is called once per frame
@@ -24,6 +29,10 @@ public class Waiter : MonoBehaviour {
 		//Moving the waiter for testing purposes 
 		if (Input.GetKeyDown ("x")) {
 			GeneratePathTo (7, 6);
+		} 
+		//Moving the waiter back
+		if (Input.GetKeyDown ("c")) {
+			GeneratePathTo ((int)initialPos.x, (int)initialPos.y);
 		}
 
 		// Draw our debug line showing the pathfinding!
@@ -49,6 +58,17 @@ public class Waiter : MonoBehaviour {
 			// advance to the next step in our pathfinding?
 			if (Vector3.Distance (transform.position, new Vector3 (x, 0, y)) < 0.1f)
 				AdvancePathing ();
+		} else if ((currentPath == null || currentPath.Count == 0) && (this.x != (int)initialPos.x || this.y != (int)initialPos.y)) {
+			//Make waiter walk back as soon as delivered
+			GeneratePathTo ((int)initialPos.x, (int)initialPos.y);
+			//TODO: Communicate that food has been delivered 
+		} else if (this.x == (int)initialPos.x && this.y == (int)initialPos.y) {
+			//TODO: Change the way orders are sent
+			List<OrderScript.Order> tempOrderList = orderHandler.orderList;
+			if (tempOrderList.Count > 0) {
+				GeneratePathTo (tempOrderList [0].x, tempOrderList [0].y);
+				orderHandler.orderList.RemoveAt (0);
+			}
 		}
 
 		// Smoothly animate towards the correct map tile.
@@ -120,7 +140,7 @@ public class Waiter : MonoBehaviour {
 				}
 			}
 		}
-
+			
 		// If we get there, the either we found the shortest route
 		// to our target, or there is no route at ALL to our target.
 
@@ -144,8 +164,6 @@ public class Waiter : MonoBehaviour {
 		currentPath.Reverse();
 
 		this.currentPath = currentPath;
-
-		Debug.Log ("Generated");
 	}
 
 	//Move one step forward

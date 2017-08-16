@@ -73,11 +73,16 @@ public class TileScript : MonoBehaviour {
 
 	//Set the item chosen to be displayed on this tile
 	//TODO: use different int values to represent different items in parantheses
-	public void SetItem(){
+	public void SetItem(bool isWaiter){
 		if (chosen) {
+			if (model.GetComponent<ItemScript> () != null) {
+				model.GetComponent<ItemScript> ().enabled = false;
+			}
 			currentModel = Instantiate (this.model, new Vector3 (transform.position.x, yOffset, transform.position.z), model.transform.rotation);
 			currentModel.transform.parent = this.transform;
-			itemSet = true;
+			if (!isWaiter) {
+				itemSet = true;
+			}
 		} else {
 			Debug.Log ("Tile has not been chosen");
 		}

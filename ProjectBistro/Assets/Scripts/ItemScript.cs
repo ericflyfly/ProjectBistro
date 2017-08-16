@@ -11,6 +11,7 @@ public class ItemScript : MonoBehaviour {
 	public GameObject model;
 	public Vector3 rotation;
 	public int sizeMultiplier;
+	public bool isWaiter;
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +38,7 @@ public class ItemScript : MonoBehaviour {
 			TileScript currentTile = GameManager.mapArray [(int)GameManager.mouseOver.x, (int)GameManager.mouseOver.y];
 			currentTile.SetYOffset (0.4f);
 			currentTile.SetModel (this.model);
-			currentTile.SetItem ();
+			currentTile.SetItem (isWaiter);
 		}
 	}
 }
