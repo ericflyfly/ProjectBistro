@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour {
 
 	public MapGenerator mg = null;
 
+	//Customer Instantiation
+	public int custNumber;
+	public static List<GameObject> custList; 
+	public GameObject customerPrefab;
+
 	private bool mapGenerated = false;
 
 	void Awake(){
@@ -38,6 +43,20 @@ public class GameManager : MonoBehaviour {
 		if (!mapGenerated) {
 			mg.GenerateMap ();
 			mapGenerated = true;
+		}
+
+		custList = new List<GameObject> ();
+		for (int i = 0; i < custNumber; i++) {
+			//Vector3 tilePosition = new Vector3(-mapSize.x/2 +0.5f + x, 0, -mapSize.y/2 + 0.5f + y);
+
+			//Instantiate new tiles for every x and y value and set it to 0.1 scale to fit 1 unit square
+			Vector3 offSite = new Vector3(-30, 0, 0); //Ofset tile location by 0.5f
+			GameObject cust = Instantiate (customerPrefab, offSite, Quaternion.identity) as GameObject; 
+			cust.transform.parent = this.transform;
+
+			cust.GetComponent<CustomerScript> ().ID = i;
+			cust.GetComponent<CustomerScript> ().StartCustomer ();
+			custList.Add (cust);
 		}
 	}
 

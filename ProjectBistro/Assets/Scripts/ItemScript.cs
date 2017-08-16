@@ -11,7 +11,7 @@ public class ItemScript : MonoBehaviour {
 	public GameObject model;
 	public Vector3 rotation;
 	public int sizeMultiplier;
-	public bool isWaiter;
+	public enum itemType {table, chair, waiter, blank}; 
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +21,8 @@ public class ItemScript : MonoBehaviour {
 
 		transform.localScale *= sizeMultiplier;
 		transform.rotation = Quaternion.Euler (rotation);
+
+
 	}
 
 	void OnMouseDrag(){
@@ -38,7 +40,19 @@ public class ItemScript : MonoBehaviour {
 			TileScript currentTile = GameManager.mapArray [(int)GameManager.mouseOver.x, (int)GameManager.mouseOver.y];
 			currentTile.SetYOffset (0.4f);
 			currentTile.SetModel (this.model);
-			currentTile.SetItem (isWaiter);
+
+			switch(gameObject.tag){
+			case "Waiter":
+				currentTile.SetItem (itemType.waiter);
+				break;
+			case "Table": 
+				currentTile.SetItem (itemType.table);
+				break;
+			case "Chair":
+				currentTile.SetItem (itemType.chair);
+				break;
+			}
+
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Waiter : MonoBehaviour {
 
@@ -14,7 +15,6 @@ public class Waiter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		orderHandler = GameObject.FindGameObjectWithTag ("OrderHandler").GetComponent<OrderScript>();
 
 		currentPath = new List<TileScript> ();
 		x = (int)transform.position.x;
@@ -49,6 +49,7 @@ public class Waiter : MonoBehaviour {
 
 				Debug.DrawLine(start, end, Color.red);
 
+
 				currNode++;
 			}
 		}
@@ -56,19 +57,15 @@ public class Waiter : MonoBehaviour {
 		if (currentPath != null && currentPath.Count > 0) {
 			// Have we moved our visible piece close enough to the target tile that we can
 			// advance to the next step in our pathfinding?
-			if (Vector3.Distance (transform.position, new Vector3 (x, 0, y)) < 0.1f)
+			if (Vector3.Distance (transform.position, new Vector3 (x, 0, y)) < 0.1f) {
 				AdvancePathing ();
+			}
 		} else if ((currentPath == null || currentPath.Count == 0) && (this.x != (int)initialPos.x || this.y != (int)initialPos.y)) {
 			//Make waiter walk back as soon as delivered
 			GeneratePathTo ((int)initialPos.x, (int)initialPos.y);
 			//TODO: Communicate that food has been delivered 
 		} else if (this.x == (int)initialPos.x && this.y == (int)initialPos.y) {
-			//TODO: Change the way orders are sent
-			List<OrderScript.Order> tempOrderList = orderHandler.orderList;
-			if (tempOrderList.Count > 0) {
-				GeneratePathTo (tempOrderList [0].x, tempOrderList [0].y);
-				orderHandler.orderList.RemoveAt (0);
-			}
+			TakeOrder ();
 		}
 
 		// Smoothly animate towards the correct map tile.
@@ -76,14 +73,14 @@ public class Waiter : MonoBehaviour {
 	}
 
 	// Based on Dijkstra's Algorithm for graph navigation
-	public void GeneratePathTo(int x, int y) {
+	public bool GeneratePathTo(int x, int y) {
 		
 		// Clear out our unit's old path.
 		this.currentPath = null;
 
 		// This means that if there is an item there (table/chair) the waiter cannot walk there
 		if (GameManager.mapArray [x, y].itemSet == true || GameManager.mapArray[x,y].chosen == false) {
-			return;
+			return false;
 		}
 
 		Dictionary<TileScript, float> dist = new Dictionary<TileScript, float> ();
@@ -146,7 +143,7 @@ public class Waiter : MonoBehaviour {
 
 		if(prev[target] == null) {
 			// No route between our target and the source
-			return;
+			return false;
 		}
 
 		List<TileScript> currentPath = new List<TileScript>();
@@ -164,12 +161,25 @@ public class Waiter : MonoBehaviour {
 		currentPath.Reverse();
 
 		this.currentPath = currentPath;
+
+		return true;
 	}
 
 	//Move one step forward
 	void AdvancePathing() {
 		if(currentPath==null)
 			return;
+
+		Transform model = transform.GetChild (0);
+		if (this.x < currentPath [1].x && Mathf.Abs (this.y - currentPath [1].y) < 0.1f) {
+			model.rotation = Quaternion.Euler (0, 90f, 0);
+		} else if (this.x > currentPath [1].x && Mathf.Abs (this.y - currentPath [1].y) < 0.1f) {
+			model.rotation = Quaternion.Euler (0, 270f, 0);
+		} else if (this.y > currentPath [1].y && Mathf.Abs (this.x - currentPath [1].x) < 0.1f) {
+			model.rotation = Quaternion.Euler (0, 180f, 0);
+		} else if (this.y < currentPath [1].y && Mathf.Abs (this.x - currentPath [1].x) < 0.1f) {
+			model.rotation = Quaternion.Euler (0, 0f, 0);
+		}
 
 		// Move us to the next tile in the sequence
 		this.x = currentPath[1].x;
@@ -183,6 +193,23 @@ public class Waiter : MonoBehaviour {
 			// destination -- and we are standing on it!
 			// So let's just clear our pathfinding info.
 			currentPath = null;
+		}
+	}
+
+	public void TakeOrder(){
+
+		if (SceneManager.GetActiveScene ().buildIndex != 0) {
+			orderHandler = GameObject.FindGameObjectWithTag ("OrderHandler").GetComponent<OrderScript> ();
+		}
+
+		if (orderHandler != null) {
+			List<OrderScript.Order> tempOrderList = orderHandler.orderList;
+			if (tempOrderList.Count > 0) {
+				//Remove the order from the list iff the path is generated successfully
+				if (GeneratePathTo (tempOrderList [0].x, tempOrderList [0].y)) {
+					orderHandler.orderList.RemoveAt (0);
+				}
+			}
 		}
 	}
 }
